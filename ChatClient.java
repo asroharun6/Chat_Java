@@ -8,6 +8,7 @@ public class ChatClient {
     private BufferedReader consoleInput; // Input stream from console
 
     public ChatClient(String serverAddress, int serverPort) throws IOException {
+        // Connect to the server
         socket = new Socket(serverAddress, serverPort);
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         out = new PrintWriter(socket.getOutputStream(), true);
@@ -16,7 +17,8 @@ public class ChatClient {
 
     public void start() {
         try {
-            System.out.println(in.readLine()); // Read the prompt for name
+            // Display the prompt and send the name to the server
+            System.out.println(in.readLine()); // "Enter your name: "
             String userName = consoleInput.readLine();
             out.println(userName); // Send the user name to the server
 
@@ -25,7 +27,7 @@ public class ChatClient {
                 try {
                     String serverMessage;
                     while ((serverMessage = in.readLine()) != null) {
-                        System.out.println(serverMessage);
+                        System.out.println(serverMessage); // Display messages from the server
                     }
                 } catch (IOException e) {
                     System.out.println("Connection to server lost.");
